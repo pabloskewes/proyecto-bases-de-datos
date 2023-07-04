@@ -2,6 +2,9 @@ import os
 import sqlalchemy
 import pandas as pd
 from tabulate import tabulate
+import dotenv
+
+dotenv.load_dotenv()
 
 
 def print_table(df: pd.DataFrame) -> None:
@@ -12,9 +15,11 @@ def print_table(df: pd.DataFrame) -> None:
 class SQLConnection:
     def __init__(self, engine: sqlalchemy.engine.base.Engine):
         self.engine = engine
+        self.inspector = sqlalchemy.inspect(engine)
         
     @classmethod
     def from_url(cls, url: str):
+        print(f"Connecting to {url}")
         engine = sqlalchemy.create_engine(url)
         return cls(engine)
     
