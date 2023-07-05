@@ -70,7 +70,7 @@ El backend está desarrollado con FastAPI y SQLAlchemy. La estructura del backen
 
 ```
 backend
-├── main.py # Archivo principal del backend, también se encuentran las rutas
+├── main.py # Archivo principal del backend
 ├── logs # Logs del backend
 ├── src # Código fuente del backend
 │   ├── __init__.py
@@ -79,6 +79,7 @@ backend
 │   ├── logger.py # Logger del backend
 │   ├── schemas.py # Schemas de los modelos (Pydantic)
 │   ├── crud.py # Funciones de acceso a la base de datos
+│   ├── routes # Rutas del backend
 │── __init__.py
 |── .env # Archivo de configuración: contiene la información de la base de datos
 ```

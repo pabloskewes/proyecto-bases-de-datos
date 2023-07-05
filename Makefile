@@ -12,4 +12,5 @@ run_backend:
 	@source venv/bin/activate && \
 		cd backend && \
 		echo $$PWD && \
-		uvicorn main:app --reload --port 8091
+		python main.py
+		
