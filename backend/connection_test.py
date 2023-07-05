@@ -1,4 +1,4 @@
-from sql_connection import SQLConnection, print_table
+from backend.sql_connection import SQLConnection, print_table
 
 
 db = SQLConnection.from_env()

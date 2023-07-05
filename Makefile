@@ -4,5 +4,7 @@ SHELL := /bin/bash
 run_dev:
 	@echo "Running app (DEV)..."
 	@source venv/bin/activate && \
-		python3 app.py
+		cd frontend && \
+		echo $$PWD && \
+		python app.py
 		

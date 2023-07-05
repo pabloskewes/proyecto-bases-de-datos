@@ -54,7 +54,6 @@ class ChileMap:
             locations='codregion',
             color='value',
             mapbox_style="open-street-map",
-            # get center of chile
             center=dict(lat=-35, lon=-71),
             zoom=3,
             height=800,

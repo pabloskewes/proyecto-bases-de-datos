@@ -4,12 +4,9 @@ from functools import wraps
 from contextlib import contextmanager
 from copy import deepcopy
 
-from src.logger.config import SETTINGS
-
 
 DEFAULT_TAGS = ["GENERAL"]
 DEFAULT_LEVEL = logging.DEBUG
-LOGGER_NAME = "hosting-airbnb-prices"
 
 
 def str_to_level(level: str):
@@ -18,8 +15,8 @@ def str_to_level(level: str):
 
 
 class AppLogger:
-    def __init__(self, log_file: str = None, debug_logs: bool = False):
-        self.logger = logging.getLogger(LOGGER_NAME)
+    def __init__(self, logger_name: str, log_file: str = None, debug_logs: bool = False):
+        self.logger = logging.getLogger(logger_name)
         self.logger.setLevel(DEFAULT_LEVEL)
         formatter = logging.Formatter("%(asctime)s - %(levelname)s - %(message)s")
 
@@ -128,11 +125,3 @@ class AppLogger:
         finally:
             self.using_default_tags = original_tags
             self.set_level(original_level)
-
-
-logger = AppLogger(
-    log_file=SETTINGS["LOG_FILE"],
-    debug_logs=SETTINGS["DEBUG_LOGS"],
-)
-logger.allow_tags = SETTINGS["ALLOWED_TAGS"]
-logger.set_level(SETTINGS["LOG_LEVEL"])

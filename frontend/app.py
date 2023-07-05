@@ -6,6 +6,7 @@ from src.components import layout
 
 app = dash.Dash(__name__, external_stylesheets=[dbc.themes.BOOTSTRAP])
 
+
 app.title = "Parques Vehiculares"
 app.layout = layout.render(app)
 

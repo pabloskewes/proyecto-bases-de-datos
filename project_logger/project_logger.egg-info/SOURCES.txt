@@ -1,0 +1,6 @@
+setup.py
+project_logger/project_logger.py
+project_logger.egg-info/PKG-INFO
+project_logger.egg-info/SOURCES.txt
+project_logger.egg-info/dependency_links.txt
+project_logger.egg-info/top_level.txt
