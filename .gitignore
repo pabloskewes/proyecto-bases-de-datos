@@ -3,3 +3,4 @@ venv
 __pycache__
 .ipynb_checkpoints
 exploring_db.ipynb
+logs
