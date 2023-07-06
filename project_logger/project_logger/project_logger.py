@@ -30,7 +30,6 @@ class AppLogger:
             stream_handler = logging.StreamHandler()
             stream_handler.setFormatter(formatter)
             self.logger.addHandler(stream_handler)
-            print("Logging to console")
 
         self.level = DEFAULT_LEVEL
         self.using_default_tags: List[str] = deepcopy(DEFAULT_TAGS)

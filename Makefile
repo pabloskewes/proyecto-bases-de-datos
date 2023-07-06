@@ -13,4 +13,11 @@ run_backend:
 		cd backend && \
 		echo $$PWD && \
 		python main.py
+
+tests_frontend:
+	@echo "Running frontend tests..."
+	@source venv/bin/activate && \
+		cd frontend && \
+		echo $$PWD && \
+		python -m unittest discover -s tests
 		

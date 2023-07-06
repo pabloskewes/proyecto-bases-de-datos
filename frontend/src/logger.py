@@ -11,9 +11,11 @@ logger = AppLogger(
     debug_logs=True,
 )
 logger.allow_tags = [
-    "CHILE-MAP",
+    # "CHILE-MAP",
+    "BUSCADOR-RECORRIDOS",
 ]
 logger.set_level("DEBUG")
+logger.log(f"Logger initialized using tags {logger.allow_tags}")
 
 
 def get_logger():
