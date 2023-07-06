@@ -10,20 +10,25 @@ class Servicio(BaseModel):
     nombre_responsable: str
 
 
-class ComunaQueryParams(BaseModel):
-    region: int = Field(..., ge=1, le=16)
-
-
-class ComunaResponse(BaseModel):
-    comunas: List[str]
-
-
 class Recorrido(BaseModel):
     nombre_recorrido: str
     lugar_origen: str
     lugar_destino: str
     s_folio: int
     s_region: int
+
+
+class Calle(BaseModel):
+    calle: str
+    orden: int
+
+
+class ComunaQueryParams(BaseModel):
+    region: int = Field(..., ge=1, le=16)
+
+
+class ComunaResponse(BaseModel):
+    comunas: List[str]
 
 
 class BusquedaRecorridoQueryParams(BaseModel):
@@ -35,11 +40,6 @@ class BusquedaRecorridoQueryParams(BaseModel):
 
 class BusquedaRecorridoResponse(BaseModel):
     recorridos: List[Recorrido]
-
-
-class Calle(BaseModel):
-    calle: str
-    orden: int
 
 
 class DetalleRutaQueryParams(BaseModel):
