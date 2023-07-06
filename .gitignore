@@ -12,3 +12,7 @@ notebooks
 
 # env
 .env
+
+# poetry
+poetry.lock
+pyproject.toml
