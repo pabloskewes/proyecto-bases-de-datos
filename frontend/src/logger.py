@@ -12,7 +12,8 @@ logger = AppLogger(
 )
 logger.allow_tags = [
     # "CHILE-MAP",
-    "BUSCADOR-RECORRIDOS",
+    # "BUSCADOR-RECORRIDOS",
+    "TABLA-RECORRIDOS",
 ]
 logger.set_level("DEBUG")
 logger.log(f"Logger initialized using tags {logger.allow_tags}")

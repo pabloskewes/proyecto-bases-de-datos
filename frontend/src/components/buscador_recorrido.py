@@ -67,7 +67,7 @@ def render(app: Dash) -> html.Div:
         className="mr-1",
         n_clicks=0,
     )
-    
+
     register_callbacks(app)
 
     return html.Div(
@@ -103,7 +103,7 @@ def register_callbacks(app: Dash):
         logger.log(f"Updating FROM_COMUNA dropdown with region {region}")
         if region is None:
             return []
-        comunas = client.get_comunas(region=region)['comunas']
+        comunas = client.get_comunas(region=region)["comunas"]
         logger.log(f"Got {len(comunas)} comunas")
         logger.log(f"First comuna: {comunas[0]}")
 
@@ -117,7 +117,7 @@ def register_callbacks(app: Dash):
         logger.log(f"Updating TO_COMUNA dropdown with region {region}")
         if region is None:
             return []
-        comunas = client.get_comunas(region=region)['comunas']
+        comunas = client.get_comunas(region=region)["comunas"]
         logger.log(f"Got {len(comunas)} comunas")
         logger.log(f"First comuna: {comunas[0]}")
 

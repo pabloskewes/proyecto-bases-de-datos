@@ -6,3 +6,7 @@ FROM_COMUNA_DROPDOWN = "from-comuna-dropdown"
 TO_REGION_DROPDOWN = "to-region-dropdown"
 TO_COMUNA_DROPDOWN = "to-comuna-dropdown"
 SEARCH_RECORRIDOS_BUTTON = "search-recorridos-button"
+
+# TABLA RECORRIDOS
+TABLA_RECORRIDOS = "tabla-recorridos"
+TABLA_RECORRIDOS_TITLE = "tabla-recorridos-title"
