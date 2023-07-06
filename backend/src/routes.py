@@ -49,3 +49,9 @@ def get_vehicles(
 ):
     vehicles = crud.get_vehicles(db, params)
     return vehicles
+
+
+@router.get("/comunas", response_model=List[str])
+def get_comunas(db: Session = Depends(get_db), params: dict[int] = {}):
+    comunas = crud.get_vehicles(db, params)
+    return comunas

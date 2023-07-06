@@ -1,5 +1,4 @@
 from typing import List
-
 from pydantic import BaseModel
 
 
@@ -20,7 +19,8 @@ class Recorrido(BaseModel):
 
 
 class BusquedaRecorridoQueryParams(BaseModel):
-    region: int
+    from_region: int
+    to_region: int
     from_comuna: str
     to_comuna: str
 

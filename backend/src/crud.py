@@ -6,9 +6,7 @@ from sqlalchemy import text
 from src import models, schemas
 
 
-def exec_raw_query(
-    db: Session, raw_query: str, params: Dict[str, any] = None
-) -> List[Dict]:
+def exec_raw_query(db: Session, raw_query: str, params: Dict[str, any] = None) -> List[Dict]:
     """
     Execute a raw query with parameters and return the result as a list of dictionaries
     Args:
@@ -31,40 +29,59 @@ def get_servicios(db: Session) -> List[Dict]:
     return exec_raw_query(db, raw_query)
 
 
-# TODO: FIX QUERY
-def get_recorridos(
-    db: Session, region: int, from_comuna: str, to_comuna: str
-) -> List[Dict]:
-    raw_query = """
-    SELECT * FROM recorrido WHERE s_region = :region AND id_origen = (SELECT id FROM lugar WHERE comuna = :from_comuna) AND id_destino = (SELECT id FROM lugar WHERE comuna = :to_comuna);
+def get_comunas(db: Session, region: int) -> List[str]:
+    raw_query = f"""
+    SELECT * FROM comunasregion{region};
     """
-    params = {"region": region, "from_comuna": from_comuna, "to_comuna": to_comuna}
+    params = {"region": region}
+    return exec_raw_query(db, raw_query, params)
+
+
+def get_recorridos(db: Session, from_region: int, to_region: int, from_comuna: str, to_comuna: str) -> List[Dict]:
+    raw_query = """
+    SELECT * FROM recorrido 
+    WHERE id_origen IN (
+        SELECT id FROM lugar L1
+        WHERE L1.region = :from_region AND L1.comuna LIKE :from_comuna
+        )
+    AND id_destino IN (           
+        SELECT id FROM lugar L2
+        WHERE L2.region = :to_region AND L2.comuna LIKE :to_comuna
+        );
+
+    """
+    params = {"from_region": from_region, "to_region": to_region,   "from_comuna": from_comuna, "to_comuna": to_comuna}
     return exec_raw_query(db, raw_query, params)
 
 
 # TODO: FIX QUERY
-def get_detalle_ruta(
-    db: Session, region: int, folio: int, nombre_recorrido: str
-) -> List[Dict]:
+def get_detalle_ruta(db: Session, region: int, folio: int, nombre_recorrido: str) -> List[Dict]:
     raw_query = """
-    SELECT * FROM trazado WHERE sentido = 'ida' AND comuna IN (SELECT comuna FROM recorrido WHERE s_region = :region AND s_folio = :folio AND nombre_recorrido = :nombre_recorrido) ORDER BY orden;
+    SELECT * FROM pasapor 
+    WHERE s_region = :region
+    AND s_folio = :folio
+    AND r_nombre_recorrido LIKE :nombre_recorrido
+    ORDER BY t_sentido, orden;
     """
     params = {"region": region, "folio": folio, "nombre_recorrido": nombre_recorrido}
-    ida = exec_raw_query(db, raw_query, params)
+    results = exec_raw_query(db, raw_query, params)
 
-    raw_query = """
-    SELECT * FROM trazado WHERE sentido = 'regreso' AND comuna IN (SELECT comuna FROM recorrido WHERE s_region = :region AND s_folio = :folio AND nombre_recorrido = :nombre_recorrido) ORDER BY orden;
-    """
-    params = {"region": region, "folio": folio, "nombre_recorrido": nombre_recorrido}
-    regreso = exec_raw_query(db, raw_query, params)
-
+    ida, regreso = [], []
+    for trazado in results:
+        if trazado['t_sentido'] == 'IDA':
+            ida.append(trazado)
+        else:
+            regreso.append(trazado)
     return {"ida": ida, "regreso": regreso}
 
 
 # TODO: FIX QUERY
 def get_vehicles(db: Session, region: int, comuna: str, calle: str) -> List[Dict]:
     raw_query = """
-    SELECT * FROM vehiculo WHERE region = :region AND comuna = :comuna AND calle = :calle;
+    SELECT patente, marca, modelo, anho_fabricacion AS año_fabricacion FROM vehiculo V
+    WHERE V.s_region = :region AND V.s_folio IN (
+        SELECT P.s_folio FROM pasapor P
+        WHERE P.s_region = :region AND P.t_calle LIKE :calle AND P.t_comuna LIKE :comuna);
     """
     params = {"region": region, "comuna": comuna, "calle": calle}
     return exec_raw_query(db, raw_query, params)
