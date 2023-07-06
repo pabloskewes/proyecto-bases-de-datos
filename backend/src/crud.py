@@ -4,9 +4,16 @@ from sqlalchemy.orm import Session
 from sqlalchemy import text
 
 from src import models, schemas
+from src.logger import get_logger
 
 
-def exec_raw_query(db: Session, raw_query: str, params: Dict[str, any] = None) -> List[Dict]:
+logger = get_logger()
+
+
+@logger.wrap_func(tags=["CRUD"])
+def exec_raw_query(
+    db: Session, raw_query: str, params: Dict[str, any] = None
+) -> List[Dict]:
     """
     Execute a raw query with parameters and return the result as a list of dictionaries
     Args:
@@ -18,8 +25,16 @@ def exec_raw_query(db: Session, raw_query: str, params: Dict[str, any] = None) -
     result = db.execute(text(raw_query), params)
     rows = result.fetchall()
     columns = result.keys()
+    values = [dict(zip(columns, row)) for row in rows]
+    logger.log("Performed following query:")
+    logger.log(raw_query)
+    logger.log("With parameters:")
+    logger.log(params)
+    logger.log(f"Got {len(values)} results")
+    logger.log("Results:")
+    logger.log(values)
 
-    return [dict(zip(columns, row)) for row in rows]
+    return values
 
 
 def get_servicios(db: Session) -> List[Dict]:
@@ -37,7 +52,9 @@ def get_comunas(db: Session, region: int) -> List[str]:
     return exec_raw_query(db, raw_query, params)
 
 
-def get_recorridos(db: Session, from_region: int, to_region: int, from_comuna: str, to_comuna: str) -> List[Dict]:
+def get_recorridos(
+    db: Session, from_region: int, to_region: int, from_comuna: str, to_comuna: str
+) -> List[Dict]:
     raw_query = """
     SELECT * FROM recorrido 
     WHERE id_origen IN (
@@ -50,11 +67,18 @@ def get_recorridos(db: Session, from_region: int, to_region: int, from_comuna: s
         );
 
     """
-    params = {"from_region": from_region, "to_region": to_region,   "from_comuna": from_comuna, "to_comuna": to_comuna}
+    params = {
+        "from_region": from_region,
+        "to_region": to_region,
+        "from_comuna": from_comuna,
+        "to_comuna": to_comuna,
+    }
     return exec_raw_query(db, raw_query, params)
 
 
-def get_detalle_ruta(db: Session, region: int, folio: int, nombre_recorrido: str) -> List[Dict]:
+def get_detalle_ruta(
+    db: Session, region: int, folio: int, nombre_recorrido: str
+) -> List[Dict]:
     raw_query = """
     SELECT * FROM pasapor 
     WHERE s_region = :region
@@ -67,7 +91,7 @@ def get_detalle_ruta(db: Session, region: int, folio: int, nombre_recorrido: str
 
     ida, regreso = [], []
     for trazado in results:
-        if trazado['t_sentido'] == 'IDA':
+        if trazado["t_sentido"] == "IDA":
             ida.append(trazado)
         else:
             regreso.append(trazado)
