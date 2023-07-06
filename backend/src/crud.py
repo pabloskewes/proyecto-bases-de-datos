@@ -1,9 +1,8 @@
-from typing import List, Dict
+from typing import List, Dict, Any
 
 from sqlalchemy.orm import Session
 from sqlalchemy import text
 
-from src import models, schemas
 from src.logger import get_logger
 
 
@@ -11,9 +10,7 @@ logger = get_logger()
 
 
 @logger.wrap_func(tags=["CRUD"])
-def exec_raw_query(
-    db: Session, raw_query: str, params: Dict[str, any] = None
-) -> List[Dict]:
+def exec_raw_query(db: Session, raw_query: str, params: Dict[str, any] = None) -> Any:
     """
     Execute a raw query with parameters and return the result as a list of dictionaries
     Args:
@@ -25,16 +22,19 @@ def exec_raw_query(
     result = db.execute(text(raw_query), params)
     rows = result.fetchall()
     columns = result.keys()
-    values = [dict(zip(columns, row)) for row in rows]
+    logger.log(f"{rows = }")
+    logger.log(f"{columns = }")
+    records = [dict(zip(columns, row)) for row in rows]
+
     logger.log("Performed following query:")
     logger.log(raw_query)
     logger.log("With parameters:")
     logger.log(params)
-    logger.log(f"Got {len(values)} results")
+    logger.log(f"Got {len(records)} results")
     logger.log("Results:")
-    logger.log(values)
+    logger.log(records)
 
-    return values
+    return records
 
 
 def get_servicios(db: Session) -> List[Dict]:
@@ -45,12 +45,14 @@ def get_servicios(db: Session) -> List[Dict]:
 
 
 def get_comunas(db: Session, region: int) -> List[str]:
-    int_region = int(str(region).split('=')[-1])
+    int_region = int(str(region).split("=")[-1])
     raw_query = f"""
     SELECT * FROM comunasregion{int_region};
     """
     params = {"region": region}
-    return exec_raw_query(db, raw_query, params)
+    records = exec_raw_query(db, raw_query, params)
+    results = [record["comuna"] for record in records]
+    return {"comunas": results}
 
 
 def get_recorridos(
@@ -74,6 +76,7 @@ def get_recorridos(
         "from_comuna": from_comuna,
         "to_comuna": to_comuna,
     }
+
     return exec_raw_query(db, raw_query, params)
 
 
