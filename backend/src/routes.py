@@ -33,7 +33,7 @@ def get_recorridos(
     db: Session = Depends(get_db),
     params: schemas.BusquedaRecorridoQueryParams = Depends(),
 ):
-    recorridos = crud.get_recorridos(db, params)
+    recorridos = crud.get_recorridos(db=db, **params.dict())
     return recorridos
 
 
@@ -41,7 +41,7 @@ def get_recorridos(
 def get_detalle_ruta(
     db: Session = Depends(get_db), params: schemas.DetalleRutaQueryParams = Depends()
 ):
-    detalle_ruta = crud.get_detalle_ruta(db, params)
+    detalle_ruta = crud.get_detalle_ruta(db, **params.dict())
     return detalle_ruta
 
 
@@ -49,5 +49,5 @@ def get_detalle_ruta(
 def get_vehicles(
     db: Session = Depends(get_db), params: schemas.VehicleQueryParams = Depends()
 ):
-    vehicles = crud.get_vehicles(db, params)
+    vehicles = crud.get_vehicles(db, **params.dict())
     return vehicles

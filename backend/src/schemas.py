@@ -12,8 +12,8 @@ class Servicio(BaseModel):
 
 class Recorrido(BaseModel):
     nombre_recorrido: str
-    id_origen: int
-    id_destino: int
+    lugar_origen: str
+    lugar_destino: str
     s_folio: int
     s_region: int
 

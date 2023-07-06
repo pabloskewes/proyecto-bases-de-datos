@@ -59,15 +59,9 @@ def get_recorridos(
     db: Session, from_region: int, to_region: int, from_comuna: str, to_comuna: str
 ) -> List[Dict]:
     raw_query = """
-    SELECT * FROM recorrido 
-    WHERE id_origen IN (
-        SELECT id FROM lugar L1
-        WHERE L1.region = :from_region AND L1.comuna LIKE :from_comuna
-        )
-    AND id_destino IN (           
-        SELECT id FROM lugar L2
-        WHERE L2.region = :to_region AND L2.comuna LIKE :to_comuna
-        );
+    SELECT R.nombre_recorrido AS nombre_recorrido, R.s_region AS s_region, R.s_folio, L1.nombre AS lugar_origen, L2.nombre AS lugar_destino FROM recorrido R, lugar L1, lugar L2
+    WHERE (R.id_origen = L1.id AND L1.region = :from_region AND L1.comuna LIKE :from_comuna)
+    AND (R.id_destino = L2.id AND L2.region = :to_region AND L2.comuna LIKE :to_comuna);
 
     """
     params = {
@@ -76,15 +70,15 @@ def get_recorridos(
         "from_comuna": from_comuna,
         "to_comuna": to_comuna,
     }
-
-    return exec_raw_query(db, raw_query, params)
+    results = exec_raw_query(db, raw_query, params)
+    return results
 
 
 def get_detalle_ruta(
     db: Session, region: int, folio: int, nombre_recorrido: str
 ) -> List[Dict]:
     raw_query = """
-    SELECT * FROM pasapor 
+    SELECT t_calle AS calle, orden, t_sentido FROM pasapor 
     WHERE s_region = :region
     AND s_folio = :folio
     AND r_nombre_recorrido LIKE :nombre_recorrido
@@ -95,19 +89,22 @@ def get_detalle_ruta(
 
     ida, regreso = [], []
     for trazado in results:
+        new_trazado = {key: trazado[key] for key in ["calle", "orden"]}
         if trazado["t_sentido"] == "IDA":
-            ida.append(trazado)
+            ida.append(new_trazado)
         else:
-            regreso.append(trazado)
+            regreso.append(new_trazado)
     return {"ida": ida, "regreso": regreso}
 
 
 def get_vehicles(db: Session, region: int, comuna: str, calle: str) -> List[Dict]:
     raw_query = """
-    SELECT patente, marca, modelo, anho_fabricacion AS año_fabricacion FROM vehiculo V
-    WHERE V.s_region = :region AND V.s_folio IN (
+    SELECT S.nombre_responsable as nombre_responsable, V.patente AS patente, V.marca AS marca, V.modelo AS modelo, V.anho_fabricacion AS año_fabricacion FROM vehiculo V, servicio S
+    WHERE S.region = :region
+    AND V.s_region = :region AND V.s_folio IN (
         SELECT P.s_folio FROM pasapor P
-        WHERE P.s_region = :region AND P.t_calle LIKE :calle AND P.t_comuna LIKE :comuna);
+        WHERE P.s_region = :region AND P.t_calle LIKE :calle AND P.t_comuna LIKE :comuna)
+    AND S.folio = V.s_folio;
     """
     params = {"region": region, "comuna": comuna, "calle": calle}
     return exec_raw_query(db, raw_query, params)
