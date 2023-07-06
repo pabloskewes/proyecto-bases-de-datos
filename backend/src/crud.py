@@ -54,7 +54,6 @@ def get_recorridos(db: Session, from_region: int, to_region: int, from_comuna: s
     return exec_raw_query(db, raw_query, params)
 
 
-# TODO: FIX QUERY
 def get_detalle_ruta(db: Session, region: int, folio: int, nombre_recorrido: str) -> List[Dict]:
     raw_query = """
     SELECT * FROM pasapor 
@@ -75,7 +74,6 @@ def get_detalle_ruta(db: Session, region: int, folio: int, nombre_recorrido: str
     return {"ida": ida, "regreso": regreso}
 
 
-# TODO: FIX QUERY
 def get_vehicles(db: Session, region: int, comuna: str, calle: str) -> List[Dict]:
     raw_query = """
     SELECT patente, marca, modelo, anho_fabricacion AS año_fabricacion FROM vehiculo V
