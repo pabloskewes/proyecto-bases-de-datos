@@ -45,8 +45,9 @@ def get_servicios(db: Session) -> List[Dict]:
 
 
 def get_comunas(db: Session, region: int) -> List[str]:
+    int_region = int(str(region).split('=')[-1])
     raw_query = f"""
-    SELECT * FROM comunasregion{region};
+    SELECT * FROM comunasregion{int_region};
     """
     params = {"region": region}
     return exec_raw_query(db, raw_query, params)

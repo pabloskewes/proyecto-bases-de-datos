@@ -33,12 +33,12 @@ def get_db():
     finally:
         db.close()
 
-def create_user():
-    with engine.connect() as conection:
-        conection.execute("CREATE USER pudinPoof WITH PASSWORD 'poof'")
-        conection.execute("GRANT CONNECT ON DATABASE SQLALCHEMY_DATABASE_URL TO pudinPoof")
-        conection.execute("GRANT USAGE ON SCHEMA pudin TO pudinPoof")
-        conection.execute("GRANT SELECT ON ALL TABLES IN SCHEMA pudin TO pudinPoof")
-        conection.execute("ALTER DEFAULT PRIVILEGES IN SCHEMA pudin GRANT SELECT ON TABLES TO pudinPoof")
+# def create_user():
+#     with engine.connect() as conection:
+#         conection.execute("CREATE USER pudinPoof WITH PASSWORD 'poof'")
+#         conection.execute("GRANT CONNECT ON DATABASE SQLALCHEMY_DATABASE_URL TO pudinPoof")
+#         conection.execute("GRANT USAGE ON SCHEMA pudin TO pudinPoof")
+#         conection.execute("GRANT SELECT ON ALL TABLES IN SCHEMA pudin TO pudinPoof")
+#         conection.execute("ALTER DEFAULT PRIVILEGES IN SCHEMA pudin GRANT SELECT ON TABLES TO pudinPoof")
         
-create_user()
+# create_user()
