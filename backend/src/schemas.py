@@ -1,3 +1,5 @@
+from typing import List
+
 from pydantic import BaseModel
 
 
@@ -9,31 +11,6 @@ class Servicio(BaseModel):
     nombre_responsable: str
 
 
-class Lugar(BaseModel):
-    id: int
-    nombre: str
-    comuna: str
-    domicilio: str
-
-
-class Trazado(BaseModel):
-    sentido: str
-    calle: str
-    comuna: str
-
-
-class Vehiculo(BaseModel):
-    patente: str
-    s_folio: int
-    s_region: int
-    marca: str
-    fecha_ingreso: str
-    capacidad: int
-    año_fabricacion: int
-    modelo: str
-    tipo_servicio: str
-
-
 class Recorrido(BaseModel):
     nombre_recorrido: str
     id_origen: int
@@ -42,11 +19,41 @@ class Recorrido(BaseModel):
     s_region: int
 
 
-class PasaPor(BaseModel):
-    r_nombre_recorrido: str
-    r_calle: str
-    t_comuna: str
-    t_sentido: str
+class BusquedaRecorridoQueryParams(BaseModel):
+    region: int
+    from_comuna: str
+    to_comuna: str
+
+
+class BusquedaRecorridoResponse(BaseModel):
+    recorridos: List[Recorrido]
+
+
+class Calle(BaseModel):
+    calle: str
     orden: int
-    s_folio: int
-    s_region: int
+
+
+class DetalleRutaQueryParams(BaseModel):
+    region: int
+    folio: int
+    nombre_recorrido: str
+
+
+class DetalleRutaResponse(BaseModel):
+    ida: List[Calle]
+    regreso: List[Calle]
+
+
+class VehicleQueryParams(BaseModel):
+    region: int
+    comuna: str
+    calle: str
+
+
+class VehicleResponse(BaseModel):
+    nombre_responsable: str
+    patenten: str
+    marca: str
+    modelo: str
+    año_fabricacion: int
