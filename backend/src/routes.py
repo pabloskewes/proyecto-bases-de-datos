@@ -14,16 +14,18 @@ def index() -> Dict[str, str]:
     return {"message": "Hello, world!"}
 
 
-@router.get("/servicios_orm", response_model=List[schemas.Servicio])
-def get_servicios_orm(db: Session = Depends(get_db)):
-    servicios = crud.get_servicios_orm(db)
-    return servicios
-
-
 @router.get("/servicios", response_model=List[schemas.Servicio])
 def get_servicios(db: Session = Depends(get_db)):
     servicios = crud.get_servicios(db)
     return servicios
+
+
+@router.get("/comunas", response_model=schemas.ComunaResponse)
+def get_comunas(
+    db: Session = Depends(get_db), params: schemas.ComunaQueryParams = Depends()
+):
+    comunas = crud.get_comunas(db, params)
+    return comunas
 
 
 @router.get("/recorridos", response_model=List[schemas.Recorrido])
@@ -49,9 +51,3 @@ def get_vehicles(
 ):
     vehicles = crud.get_vehicles(db, params)
     return vehicles
-
-
-@router.get("/comunas", response_model=List[str])
-def get_comunas(db: Session = Depends(get_db), params: dict[int] = {}):
-    comunas = crud.get_vehicles(db, params)
-    return comunas

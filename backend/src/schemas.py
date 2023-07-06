@@ -1,5 +1,5 @@
 from typing import List
-from pydantic import BaseModel
+from pydantic import BaseModel, Field
 
 
 class Servicio(BaseModel):
@@ -8,6 +8,14 @@ class Servicio(BaseModel):
     tipo_servicio: str
     flota: int
     nombre_responsable: str
+
+
+class ComunaQueryParams(BaseModel):
+    region: int = Field(..., ge=1, le=16)
+
+
+class ComunaResponse(BaseModel):
+    comunas: List[str]
 
 
 class Recorrido(BaseModel):
@@ -53,7 +61,7 @@ class VehicleQueryParams(BaseModel):
 
 class VehicleResponse(BaseModel):
     nombre_responsable: str
-    patenten: str
+    patente: str
     marca: str
     modelo: str
     año_fabricacion: int
