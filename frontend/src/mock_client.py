@@ -29,24 +29,22 @@ class MockClient:
     def get_recorridos(
         self, from_region: int, from_comuna: str, to_region: int, to_comuna: str
     ):
-        return {
-            "recorridos": [
-                {
-                    "nombre_recorrido": f"recorrido_{from_comuna}_{to_comuna}_1",
-                    "id_origen": 1,
-                    "id_destino": 2,
-                    "s_folio": 1,
-                    "s_region": 1,
-                },
-                {
-                    "nombre_recorrido": f"recorrido_{from_comuna}_{to_comuna}_2",
-                    "id_origen": 2,
-                    "id_destino": 3,
-                    "s_folio": 2,
-                    "s_region": 2,
-                },
-            ]
-        }
+        return [
+            {
+                "nombre_recorrido": f"recorrido_{from_comuna}_{to_comuna}_1",
+                "id_origen": 1,
+                "id_destino": 2,
+                "s_folio": 1,
+                "s_region": 1,
+            },
+            {
+                "nombre_recorrido": f"recorrido_{from_comuna}_{to_comuna}_2",
+                "id_origen": 2,
+                "id_destino": 3,
+                "s_folio": 2,
+                "s_region": 2,
+            },
+        ]
 
     def get_detalle_ruta(self, region: int, folio: int, nombre_recorrido: str):
         return {

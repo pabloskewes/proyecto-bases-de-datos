@@ -2,10 +2,10 @@ import dash
 import dash_bootstrap_components as dbc
 from dash import html
 
-from src import ids
+
 from src.components.chile_map import ChileMap
-from src.components import buscador_recorrido
-from src.components.tabla_recorridos import TablaRecorridos
+from src.components import buscador_recorrido, tabla_recorridos, detalle_ruta
+
 
 def render(app: dash.Dash) -> dbc.Container:
     """
@@ -20,15 +20,22 @@ def render(app: dash.Dash) -> dbc.Container:
     """
     title = "Parques Vehiculares"
     chile_map = ChileMap(app)
-    tabla_recorridos = TablaRecorridos(app)
-    
-    layout = dbc.Container([
-        dbc.Row([
-            html.H1(title),
-            buscador_recorrido.render(app),
-            tabla_recorridos.render(),
-            chile_map.render()
-        ])
-    ])
+
+    layout = dbc.Container(
+        [
+            dbc.Row(
+                [
+                    html.H1(title),
+                    buscador_recorrido.render(app),
+                    tabla_recorridos.render(app),
+                    dbc.Col(
+                        detalle_ruta.render(app),
+                        width=6,
+                    ),
+                    chile_map.render(),
+                ]
+            )
+        ]
+    )
 
     return layout

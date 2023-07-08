@@ -71,7 +71,7 @@ def get_recorridos(
         "to_comuna": to_comuna,
     }
     results = exec_raw_query(db, raw_query, params)
-    return results
+    return {"recorridos": results}
 
 
 def get_detalle_ruta(

@@ -1,16 +1,52 @@
+from typing import List, Dict, Any
 import requests
 
+from src.dto import (
+    ServicioDTO,
+    ComunaDTO,
+    RecorridoDTO,
+    CalleDTO,
+    DetalleRutaDTO,
+    VehicleDTO,
+)
 
 HOST = "http://localhost"
 PORT = 8091
 
 
-# TODO: Fix "-> requests.Response" to use dicts with the correct types
+def map_servicios(response: List[dict]) -> List[ServicioDTO]:
+    return [ServicioDTO(**item) for item in response]
+
+
+def map_comunas(response: dict) -> List[ComunaDTO]:
+    return [ComunaDTO(nombre=comuna) for comuna in response["comunas"]]
+
+
+def map_recorridos(response: Dict[str, List[RecorridoDTO]]) -> List[RecorridoDTO]:
+    return [RecorridoDTO(**item) for item in response["recorridos"]]
+
+
+def map_detalle_ruta(response: dict) -> DetalleRutaDTO:
+    ida = [
+        CalleDTO(nombre=calle["calle"], orden=calle["orden"])
+        for calle in response["ida"]
+    ]
+    regreso = [
+        CalleDTO(nombre=calle["calle"], orden=calle["orden"])
+        for calle in response["regreso"]
+    ]
+    return DetalleRutaDTO(ida=ida, regreso=regreso)
+
+
+def map_vehicles(response: dict) -> List[VehicleDTO]:
+    return [VehicleDTO(**item) for item in response["vehicles"]]
+
+
 class Client:
     def __init__(self, base_url: str):
         self.base_url = base_url
 
-    def make_request(self, endpoint: str, params: dict = None) -> requests.Response:
+    def make_request(self, endpoint: str, params: dict = None) -> Dict[str, Any]:
         if not endpoint.startswith("/"):
             endpoint = f"/{endpoint}"
         url = f"{self.base_url}{endpoint}"
@@ -19,19 +55,21 @@ class Client:
         return response.json()
 
     def check_connection(self) -> bool:
-        response = self.make_request("/")
+        self.make_request("/")
         return True
 
     def get_servicios(self) -> requests.Response:
-        return self.make_request("/servicios")
+        response = self.make_request("/servicios")
+        return map_servicios(response)
 
-    def get_comunas(self, region: int) -> requests.Response:
-        return self.make_request("/comunas", params={"region": region})
+    def get_comunas(self, region: int) -> List[str]:
+        response = self.make_request("/comunas", params={"region": region})
+        return map_comunas(response)
 
     def get_recorridos(
         self, from_region: int, from_comuna: str, to_region: int, to_comuna: str
-    ) -> requests.Response:
-        return self.make_request(
+    ) -> List[RecorridoDTO]:
+        response = self.make_request(
             "/recorridos",
             params={
                 "from_region": from_region,
@@ -40,11 +78,12 @@ class Client:
                 "to_comuna": to_comuna,
             },
         )
+        return map_recorridos(response)
 
     def get_detalle_ruta(
         self, region: int, folio: int, nombre_recorrido: str
-    ) -> requests.Response:
-        return self.make_request(
+    ) -> DetalleRutaDTO:
+        response = self.make_request(
             "/detalle_ruta",
             params={
                 "region": region,
@@ -52,9 +91,10 @@ class Client:
                 "nombre_recorrido": nombre_recorrido,
             },
         )
+        return map_detalle_ruta(response)
 
-    def get_vehicles(self, region: int, comuna: str, calle: str) -> requests.Response:
-        return self.make_request(
+    def get_vehicles(self, region: int, comuna: str, calle: str) -> List[VehicleDTO]:
+        response = self.make_request(
             "/vehicles",
             params={
                 "region": region,
@@ -62,6 +102,7 @@ class Client:
                 "calle": calle,
             },
         )
+        return map_vehicles(response)
 
 
 client = Client(base_url=f"{HOST}:{PORT}")

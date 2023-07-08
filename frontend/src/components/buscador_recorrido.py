@@ -1,10 +1,13 @@
+from typing import List, Dict
+
 from dash import html, dcc, Dash
-from dash.dependencies import Input, Output, State
+from dash.dependencies import Input, Output
 import dash_bootstrap_components as dbc
 
 from src import ids
+from src.dto import ComunaDTO
 from src.logger import get_logger
-from src.mock_client import get_client
+from src.client import get_client
 
 
 logger = get_logger()
@@ -29,6 +32,10 @@ regions = [
     {"label": "Aysén", "value": 11},
     {"label": "Magallanes", "value": 12},
 ]
+
+
+def communes_to_options(communes: List[ComunaDTO]) -> List[Dict[str, str]]:
+    return [{"label": comuna.nombre, "value": comuna.nombre} for comuna in communes]
 
 
 def render(app: Dash) -> html.Div:
@@ -94,31 +101,19 @@ def render(app: Dash) -> html.Div:
 
 
 @logger.wrap_func(tags=["BUSCADOR-RECORRIDOS"])
+def update_dropdown(region: int) -> List[Dict[str, str]]:
+    comunas = client.get_comunas(region=region)
+    return communes_to_options(comunas)
+
+
+@logger.wrap_func(tags=["BUSCADOR-RECORRIDOS"])
 def register_callbacks(app: Dash):
-    @app.callback(
+    app.callback(
         Output(ids.FROM_COMUNA_DROPDOWN, "options"),
         Input(ids.FROM_REGION_DROPDOWN, "value"),
-    )
-    def update_from_comuna_dropdown(region: int):
-        logger.log(f"Updating FROM_COMUNA dropdown with region {region}")
-        if region is None:
-            return []
-        comunas = client.get_comunas(region=region)["comunas"]
-        logger.log(f"Got {len(comunas)} comunas")
-        logger.log(f"First comuna: {comunas[0]}")
+    )(update_dropdown)
 
-        return [{"label": comuna, "value": comuna} for comuna in comunas]
-
-    @app.callback(
+    app.callback(
         Output(ids.TO_COMUNA_DROPDOWN, "options"),
         Input(ids.TO_REGION_DROPDOWN, "value"),
-    )
-    def update_to_comuna_dropdown(region: int):
-        logger.log(f"Updating TO_COMUNA dropdown with region {region}")
-        if region is None:
-            return []
-        comunas = client.get_comunas(region=region)["comunas"]
-        logger.log(f"Got {len(comunas)} comunas")
-        logger.log(f"First comuna: {comunas[0]}")
-
-        return [{"label": comuna, "value": comuna} for comuna in comunas]
+    )(update_dropdown)

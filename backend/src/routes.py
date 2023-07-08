@@ -28,7 +28,7 @@ def get_comunas(
     return comunas
 
 
-@router.get("/recorridos", response_model=List[schemas.Recorrido])
+@router.get("/recorridos", response_model=schemas.BusquedaRecorridoResponse)
 def get_recorridos(
     db: Session = Depends(get_db),
     params: schemas.BusquedaRecorridoQueryParams = Depends(),
