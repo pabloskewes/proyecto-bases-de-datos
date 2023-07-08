@@ -10,13 +10,13 @@ venv
 venv2
 logs
 notebooks
+database
 
 # env
 .env
+backend/.env
 
 # poetry
 poetry.lock
 pyproject.toml
 
-# data
-database/data

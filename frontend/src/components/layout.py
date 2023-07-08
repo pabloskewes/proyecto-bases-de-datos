@@ -24,7 +24,7 @@ def render(app: dash.Dash) -> dbc.Container:
     - layout (dbc.Container object): The layout object.
     """
     title = "Buscador de Parques Vehiculares"
-    chile_map = ChileMap(app)
+    # chile_map = ChileMap(app)
     separator = html.Div(
         className="vertical-separator",
         style={
@@ -50,7 +50,7 @@ def render(app: dash.Dash) -> dbc.Container:
                         # width=4,
                         style={"display": "flex"},
                     ),
-                    chile_map.render(),
+                    # chile_map.render(),
                 ]
             )
         ]
