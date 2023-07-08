@@ -44,6 +44,8 @@ make run_frontend
 Tras esto, se puede acceder al frontend en el puerto 8090 y al backend en el puerto 8091.
 
 ## Documentación
+
+
 ### Frontend
 El frontend está desarrollado en Dash, una librería de Python para crear aplicaciones web.
 La estructura del frontend es la siguiente:
@@ -51,6 +53,8 @@ La estructura del frontend es la siguiente:
 ```
 frontend
 ├── app.py # Archivo principal del frontend
+├── assets # Archivos estáticos
+│   ├── header.css
 ├── logs # Logs del frontend
 ├── data # Datos usados en la aplicación
 │   ├──  regiones.json # Regiones de Chile en formato GeoJSON
@@ -58,11 +62,19 @@ frontend
 │   ├── components # Componentes de Dash
 │   │   ├── __init__.py
 │   │   ├── layout.py # Layout de la aplicación
-│   │   ├── chile_map.py # Componente del mapa de Chile
 │   │   ├── buscador_recorrido.py # Componente del buscador de recorridos
+│   │   ├── tabla_recorridos.py # Componente de la tabla de recorridos
+│   │   ├── detalle_ruta.py # Componente del detalle de la ruta
+│   │   ├── vehiculos_info.py # Componente de la información de los vehículos
 │   ├── ids.py # Identificadores de los componentes
 │   ├── logger.py # Logger del frontend
+│   ├── utils.py # Funciones de utilidad
+|   ├── client.py # Cliente del backend
+|   ├── mock_client.py # Cliente del backend para pruebas
+|   ├── dto.py # DTOs para comunicación con el backend
 │   ├── __init__.py
+├── Dockerfile # Dockerfile del frontend
+├── requirements.txt # Dependencias del frontend
 ```
 
 ### Backend
@@ -82,4 +94,17 @@ backend
 │   ├── routes # Rutas del backend
 │── __init__.py
 |── .env # Archivo de configuración: contiene la información de la base de datos
+├── Dockerfile # Dockerfile del backend
+├── requirements.txt # Dependencias del backend
+```
+
+### Base de datos
+La base de datos está desarrollada en PostgreSQL. En el siguiente directorio se encuentra el script para crear la base de datos en Docker:
+
+```
+database
+├── Dockerfile # Dockerfile de la base de datos
+├── init.sql # Script para crear la base de datos
+├── .env # Archivo de configuración: contiene la información de la base de datos
+|── data # Archivos csv que se usan para crear la base de datos (no se incluyen en el repositorio)
 ```
