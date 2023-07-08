@@ -18,8 +18,10 @@ class Recorrido(BaseModel):
     s_region: int
 
 
-class Calle(BaseModel):
+class Trazado(BaseModel):
+    region: int
     calle: str
+    comuna: str
     orden: int
 
 
@@ -49,8 +51,8 @@ class DetalleRutaQueryParams(BaseModel):
 
 
 class DetalleRutaResponse(BaseModel):
-    ida: List[Calle]
-    regreso: List[Calle]
+    ida: List[Trazado]
+    regreso: List[Trazado]
 
 
 class VehicleQueryParams(BaseModel):

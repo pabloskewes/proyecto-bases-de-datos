@@ -78,7 +78,7 @@ def get_detalle_ruta(
     db: Session, region: int, folio: int, nombre_recorrido: str
 ) -> List[Dict]:
     raw_query = """
-    SELECT t_calle AS calle, orden, t_sentido FROM pasapor 
+    SELECT s_region AS region, t_calle AS calle, t_comuna AS comuna, orden, t_sentido FROM pasapor 
     WHERE s_region = :region
     AND s_folio = :folio
     AND r_nombre_recorrido LIKE :nombre_recorrido
@@ -89,7 +89,7 @@ def get_detalle_ruta(
 
     ida, regreso = [], []
     for trazado in results:
-        new_trazado = {key: trazado[key] for key in ["calle", "orden"]}
+        new_trazado = {key: trazado[key] for key in ["region", "calle", "comuna", "orden"]}
         if trazado["t_sentido"] == "IDA":
             ida.append(new_trazado)
         else:
@@ -99,7 +99,7 @@ def get_detalle_ruta(
 
 def get_vehicles(db: Session, region: int, comuna: str, calle: str) -> List[Dict]:
     raw_query = """
-    SELECT S.nombre_responsable as nombre_responsable, V.patente AS patente, V.marca AS marca, V.modelo AS modelo, V.anho_fabricacion AS año_fabricacion FROM vehiculo V, servicio S
+    SELECT DISTINCT S.nombre_responsable as nombre_responsable, V.patente AS patente, V.marca AS marca, V.modelo AS modelo, V.anho_fabricacion AS año_fabricacion FROM vehiculo V, servicio S
     WHERE S.region = :region
     AND V.s_region = :region AND V.s_folio IN (
         SELECT P.s_folio FROM pasapor P
