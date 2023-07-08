@@ -1,11 +1,9 @@
 from typing import List
-import json
 
 import dash
 import dash_bootstrap_components as dbc
-from dash import html, dcc, dash_table
+from dash import html, dcc
 from dash.dependencies import Input, Output, State
-import pandas as pd
 
 from src.client import get_client
 from src.logger import get_logger

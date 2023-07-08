@@ -1,4 +1,5 @@
 setup.py
+project_logger/__init__.py
 project_logger/project_logger.py
 project_logger.egg-info/PKG-INFO
 project_logger.egg-info/SOURCES.txt
