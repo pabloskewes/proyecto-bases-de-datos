@@ -39,7 +39,7 @@ def execute_query(db: Session, raw_query: str, params: Dict[str, any] = None) ->
 
 def get_servicios(db: Session) -> List[Dict]:
     raw_query = """
-    SELECT * FROM servicio LIMIT 10;
+    SELECT * FROM pudin.servicio LIMIT 10;
     """
     return execute_query(db, raw_query)
 
@@ -47,7 +47,7 @@ def get_servicios(db: Session) -> List[Dict]:
 def get_comunas(db: Session, region: int) -> List[str]:
     int_region = int(str(region).split("=")[-1])
     raw_query = f"""
-    SELECT * FROM comunasregion{int_region};
+    SELECT * FROM pudin.comunasregion{int_region};
     """
     params = {"region": region}
     records = execute_query(db, raw_query, params)
@@ -59,9 +59,9 @@ def get_recorridos(
     db: Session, from_region: int, to_region: int, from_comuna: str, to_comuna: str
 ) -> List[Dict]:
     raw_query = """
-    SELECT R.nombre_recorrido AS nombre_recorrido, R.s_region AS s_region, R.s_folio, L1.nombre AS lugar_origen, L2.nombre AS lugar_destino FROM recorrido R, lugar L1, lugar L2
-    WHERE (R.id_origen = L1.id AND L1.region = :from_region AND L1.comuna LIKE :from_comuna)
-    AND (R.id_destino = L2.id AND L2.region = :to_region AND L2.comuna LIKE :to_comuna);
+    SELECT R.nombre_recorrido AS nombre_recorrido, R.s_region AS s_region, R.s_folio, L1.nombre AS lugar_origen, L2.nombre AS lugar_destino FROM pudin.recorrido R, pudin.lugar L1, pudin.lugar L2
+    WHERE (R.id_origen = L1.id AND L1.region = :from_region AND L1.comuna = :from_comuna)
+    AND (R.id_destino = L2.id AND L2.region = :to_region AND L2.comuna = :to_comuna);
     """
     params = {
         "from_region": from_region,
@@ -77,10 +77,10 @@ def get_detalle_ruta(
     db: Session, region: int, folio: int, nombre_recorrido: str
 ) -> List[Dict]:
     raw_query = """
-    SELECT s_region AS region, t_calle AS calle, t_comuna AS comuna, orden, t_sentido FROM pasapor 
+    SELECT s_region AS region, t_calle AS calle, t_comuna AS comuna, orden, t_sentido FROM pudin.pasapor 
     WHERE s_region = :region
     AND s_folio = :folio
-    AND r_nombre_recorrido LIKE :nombre_recorrido
+    AND r_nombre_recorrido = :nombre_recorrido
     ORDER BY t_sentido, orden;
     """
     params = {"region": region, "folio": folio, "nombre_recorrido": nombre_recorrido}
@@ -100,11 +100,11 @@ def get_detalle_ruta(
 
 def get_vehicles(db: Session, region: int, comuna: str, calle: str) -> List[Dict]:
     raw_query = """
-    SELECT DISTINCT S.nombre_responsable as nombre_responsable, V.patente AS patente, V.marca AS marca, V.modelo AS modelo, V.anho_fabricacion AS año_fabricacion FROM vehiculo V, servicio S
+    SELECT DISTINCT S.nombre_responsable as nombre_responsable, V.patente AS patente, V.marca AS marca, V.modelo AS modelo, V.anho_fabricacion AS año_fabricacion FROM pudin.vehiculo V, pudin.servicio S
     WHERE S.region = :region
     AND V.s_region = :region AND V.s_folio IN (
-        SELECT P.s_folio FROM pasapor P
-        WHERE P.s_region = :region AND P.t_calle LIKE :calle AND P.t_comuna LIKE :comuna)
+        SELECT P.s_folio FROM pudin.pasapor P
+        WHERE P.s_region = :region AND P.t_calle = :calle AND P.t_comuna = :comuna)
     AND S.folio = V.s_folio;
     """
     params = {"region": region, "comuna": comuna, "calle": calle}
@@ -114,8 +114,8 @@ def get_vehicles(db: Session, region: int, comuna: str, calle: str) -> List[Dict
 
 def get_localization(db: Session, region: int, comuna: str) -> Dict:
     raw_query = """
-    SELECT DISTINCT latitud, longitud FROM lugar 
-    WHERE region = :region AND comuna LIKE :comuna;
+    SELECT DISTINCT latitud, longitud FROM pudin.lugar 
+    WHERE region = :region AND comuna = :comuna;
     """
     params = {"region": region, "comuna": comuna}
     results = execute_query(db, raw_query, params)
