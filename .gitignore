@@ -17,3 +17,6 @@ notebooks
 # poetry
 poetry.lock
 pyproject.toml
+
+# data
+database/data
