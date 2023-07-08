@@ -62,7 +62,6 @@ def get_recorridos(
     SELECT R.nombre_recorrido AS nombre_recorrido, R.s_region AS s_region, R.s_folio, L1.nombre AS lugar_origen, L2.nombre AS lugar_destino FROM recorrido R, lugar L1, lugar L2
     WHERE (R.id_origen = L1.id AND L1.region = :from_region AND L1.comuna LIKE :from_comuna)
     AND (R.id_destino = L2.id AND L2.region = :to_region AND L2.comuna LIKE :to_comuna);
-
     """
     params = {
         "from_region": from_region,
@@ -89,7 +88,9 @@ def get_detalle_ruta(
 
     ida, regreso = [], []
     for trazado in results:
-        new_trazado = {key: trazado[key] for key in ["region", "calle", "comuna", "orden"]}
+        new_trazado = {
+            key: trazado[key] for key in ["region", "calle", "comuna", "orden"]
+        }
         if trazado["t_sentido"] == "IDA":
             ida.append(new_trazado)
         else:
@@ -108,3 +109,13 @@ def get_vehicles(db: Session, region: int, comuna: str, calle: str) -> List[Dict
     """
     params = {"region": region, "comuna": comuna, "calle": calle}
     return execute_query(db, raw_query, params)
+
+
+def get_localization(db: Session, region: int, comuna: str) -> Dict:
+    raw_query = """
+    SELECT DISTINCT latitud, longitud FROM lugar 
+    WHERE region = :region AND comuna LIKE :comuna;
+    """
+    params = {"region": region, "comuna": comuna}
+    results = execute_query(db, raw_query, params)
+    return {'localization': results[0]}

@@ -51,3 +51,11 @@ def get_vehicles(
 ):
     vehicles = crud.get_vehicles(db, **params.dict())
     return vehicles
+
+
+@router.get("/localization", response_model=schemas.LocalizationResponse)
+def get_localization(
+    db: Session = Depends(get_db), params: schemas.LocalizationQueryParams = Depends()
+):
+    localization = crud.get_localization(db, **params.dict())
+    return localization

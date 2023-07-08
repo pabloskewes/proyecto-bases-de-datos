@@ -1,5 +1,6 @@
-from typing import List
-from pydantic import BaseModel, Field
+from typing import List, Any
+from pydantic import BaseModel, Field, validator
+from decimal import Decimal
 
 
 class Servicio(BaseModel):
@@ -23,6 +24,17 @@ class Trazado(BaseModel):
     calle: str
     comuna: str
     orden: int
+
+
+class Localization(BaseModel):
+    latitud: Any
+    longitud: Any
+
+    @validator('latitud', 'longitud')
+    def validate_value(cls, value):
+        if isinstance(value, Decimal):
+            return float(value)
+        return value
 
 
 class ComunaQueryParams(BaseModel):
@@ -67,3 +79,12 @@ class VehicleResponse(BaseModel):
     marca: str
     modelo: str
     año_fabricacion: int
+
+
+class LocalizationQueryParams(BaseModel):
+    region: int
+    comuna: str
+
+
+class LocalizationResponse(BaseModel):
+    localization: Localization
