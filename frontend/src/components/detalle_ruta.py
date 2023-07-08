@@ -20,7 +20,15 @@ def build_calle(calle: str) -> html.Div:
     return html.Div(
         [
             html.H6(calle, hidden=True),
-            html.Li(fix_name(calle)),
+            html.Li(
+                fix_name(calle),
+                style={
+                    "text-decoration": "underline",
+                    "color": "blue",
+                    "cursor": "pointer",
+                    "list-style": "none",
+                },
+            ),
         ]
     )
 
