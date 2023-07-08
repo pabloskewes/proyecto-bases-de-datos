@@ -143,3 +143,131 @@ COPY pudin.pasapor (
 )
 FROM
     '/data/pasapor.csv' DELIMITER ',' CSV HEADER;
+
+CREATE MATERIALIZED VIEW pudin.comunasregion1 AS
+SELECT
+    DISTINCT comuna
+FROM
+    pudin.lugar
+WHERE
+    region = 1;
+
+CREATE MATERIALIZED VIEW pudin.comunasregion2 AS
+SELECT
+    DISTINCT comuna
+FROM
+    pudin.lugar
+WHERE
+    region = 2;
+
+CREATE MATERIALIZED VIEW pudin.comunasregion3 AS
+SELECT
+    DISTINCT comuna
+FROM
+    pudin.lugar
+WHERE
+    region = 3;
+
+CREATE MATERIALIZED VIEW pudin.comunasregion4 AS
+SELECT
+    DISTINCT comuna
+FROM
+    pudin.lugar
+WHERE
+    region = 4;
+
+CREATE MATERIALIZED VIEW pudin.comunasregion5 AS
+SELECT
+    DISTINCT comuna
+FROM
+    pudin.lugar
+WHERE
+    region = 5;
+
+CREATE MATERIALIZED VIEW pudin.comunasregion6 AS
+SELECT
+    DISTINCT comuna
+FROM
+    pudin.lugar
+WHERE
+    region = 6;
+
+CREATE MATERIALIZED VIEW pudin.comunasregion7 AS
+SELECT
+    DISTINCT comuna
+FROM
+    pudin.lugar
+WHERE
+    region = 7;
+
+CREATE MATERIALIZED VIEW pudin.comunasregion8 AS
+SELECT
+    DISTINCT comuna
+FROM
+    pudin.lugar
+WHERE
+    region = 8;
+
+CREATE MATERIALIZED VIEW pudin.comunasregion9 AS
+SELECT
+    DISTINCT comuna
+FROM
+    pudin.lugar
+WHERE
+    region = 9;
+
+CREATE MATERIALIZED VIEW pudin.comunasregion10 AS
+SELECT
+    DISTINCT comuna
+FROM
+    pudin.lugar
+WHERE
+    region = 10;
+
+CREATE MATERIALIZED VIEW pudin.comunasregion11 AS
+SELECT
+    DISTINCT comuna
+FROM
+    pudin.lugar
+WHERE
+    region = 11;
+
+CREATE MATERIALIZED VIEW pudin.comunasregion12 AS
+SELECT
+    DISTINCT comuna
+FROM
+    pudin.lugar
+WHERE
+    region = 12;
+
+CREATE MATERIALIZED VIEW pudin.comunasregion13 AS
+SELECT
+    DISTINCT comuna
+FROM
+    pudin.lugar
+WHERE
+    region = 13;
+
+CREATE MATERIALIZED VIEW pudin.comunasregion14 AS
+SELECT
+    DISTINCT comuna
+FROM
+    pudin.lugar
+WHERE
+    region = 14;
+
+CREATE MATERIALIZED VIEW pudin.comunasregion15 AS
+SELECT
+    DISTINCT comuna
+FROM
+    pudin.lugar
+WHERE
+    region = 15;
+
+CREATE MATERIALIZED VIEW pudin.comunasregion16 AS
+SELECT
+    DISTINCT comuna
+FROM
+    pudin.lugar
+WHERE
+    region = 16;
