@@ -30,7 +30,6 @@ def render(app: dash.Dash) -> dbc.Container:
                     tabla_recorridos.render(app),
                     dbc.Col(
                         detalle_ruta.render(app),
-                        width=6,
                     ),
                     chile_map.render(),
                 ]

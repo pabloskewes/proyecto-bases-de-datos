@@ -77,8 +77,7 @@ def build_table(recorridos: List[RecorridoDTO]) -> dash_table.DataTable:
     columns = [{"name": COLUMN_NAMES[i], "id": i} for i in data.columns]
     columns.append(hidden_column)
 
-    data["recorrido_data"] = records
-    data["recorrido_data"] = data["recorrido_data"].astype(str)
+    data["recorrido_data"] = [recorrido.json() for recorrido in recorridos]
 
     table = dash_table.DataTable(
         id=ids.TABLA_RECORRIDOS,
@@ -153,4 +152,4 @@ def register_callbacks(app: dash.Dash):
 
         row = active_cell["row"]
         recorrido_data = data[row]["recorrido_data"]
-        return json.dumps(recorrido_data)
+        return json.loads(recorrido_data)
