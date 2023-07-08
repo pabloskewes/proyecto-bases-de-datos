@@ -1,6 +1,6 @@
 FROM python:3.9.2-slim-buster
 
-COPY requirements.txt /tmp/requirements.txt
+COPY backend/requirements.txt /tmp/requirements.txt
 
 RUN pip install pip --upgrade && \
     pip install -r /tmp/requirements.txt --no-cache-dir

@@ -2,3 +2,5 @@ dash
 dash_bootstrap_components
 pandas
 geopandas
+gunicorn
+pydantic

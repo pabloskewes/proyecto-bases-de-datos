@@ -1,6 +1,6 @@
 FROM python:3.9.2-slim-buster
 
-COPY requirements.txt /tmp/requirements.txt
+COPY frontend/requirements.txt /tmp/requirements.txt
 
 RUN pip install pip --upgrade && \
     pip install -r /tmp/requirements.txt --no-cache-dir
@@ -14,4 +14,5 @@ WORKDIR /frontend
 
 EXPOSE 8090
 
-CMD ["python", "app.py"]
+CMD ["gunicorn", "app:server", "-w", "3", "--bind", "0.0.0.0:8050", "--timeout", "300"]
+# CMD ["python", "app.py"]
