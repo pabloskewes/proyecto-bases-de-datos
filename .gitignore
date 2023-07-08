@@ -10,7 +10,7 @@ venv
 venv2
 logs
 notebooks
-database
+database/data
 
 # env
 .env
