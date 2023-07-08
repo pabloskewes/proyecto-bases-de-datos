@@ -10,9 +10,9 @@ logger = get_logger()
 
 
 @logger.wrap_func(tags=["CRUD"])
-def exec_raw_query(db: Session, raw_query: str, params: Dict[str, any] = None) -> Any:
+def execute_query(db: Session, raw_query: str, params: Dict[str, any] = None) -> Any:
     """
-    Execute a raw query with parameters and return the result as a list of dictionaries
+    Execute a query with parameters and return the result as a list of dictionaries
     Args:
         db (Session): SQLAlchemy session
         raw_query (str): Raw query to execute
@@ -41,7 +41,7 @@ def get_servicios(db: Session) -> List[Dict]:
     raw_query = """
     SELECT * FROM servicio LIMIT 10;
     """
-    return exec_raw_query(db, raw_query)
+    return execute_query(db, raw_query)
 
 
 def get_comunas(db: Session, region: int) -> List[str]:
@@ -50,7 +50,7 @@ def get_comunas(db: Session, region: int) -> List[str]:
     SELECT * FROM comunasregion{int_region};
     """
     params = {"region": region}
-    records = exec_raw_query(db, raw_query, params)
+    records = execute_query(db, raw_query, params)
     results = [record["comuna"] for record in records]
     return {"comunas": results}
 
@@ -70,7 +70,7 @@ def get_recorridos(
         "from_comuna": from_comuna,
         "to_comuna": to_comuna,
     }
-    results = exec_raw_query(db, raw_query, params)
+    results = execute_query(db, raw_query, params)
     return {"recorridos": results}
 
 
@@ -85,7 +85,7 @@ def get_detalle_ruta(
     ORDER BY t_sentido, orden;
     """
     params = {"region": region, "folio": folio, "nombre_recorrido": nombre_recorrido}
-    results = exec_raw_query(db, raw_query, params)
+    results = execute_query(db, raw_query, params)
 
     ida, regreso = [], []
     for trazado in results:
@@ -107,4 +107,4 @@ def get_vehicles(db: Session, region: int, comuna: str, calle: str) -> List[Dict
     AND S.folio = V.s_folio;
     """
     params = {"region": region, "comuna": comuna, "calle": calle}
-    return exec_raw_query(db, raw_query, params)
+    return execute_query(db, raw_query, params)
