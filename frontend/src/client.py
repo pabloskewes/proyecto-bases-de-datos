@@ -5,7 +5,7 @@ from src.dto import (
     ServicioDTO,
     ComunaDTO,
     RecorridoDTO,
-    CalleDTO,
+    TrazadoDTO,
     DetalleRutaDTO,
     VehicleDTO,
 )
@@ -27,14 +27,8 @@ def map_recorridos(response: Dict[str, List[RecorridoDTO]]) -> List[RecorridoDTO
 
 
 def map_detalle_ruta(response: dict) -> DetalleRutaDTO:
-    ida = [
-        CalleDTO(nombre=calle["calle"], orden=calle["orden"])
-        for calle in response["ida"]
-    ]
-    regreso = [
-        CalleDTO(nombre=calle["calle"], orden=calle["orden"])
-        for calle in response["regreso"]
-    ]
+    ida = [TrazadoDTO(**item) for item in response["ida"]]
+    regreso = [TrazadoDTO(**item) for item in response["regreso"]]
     return DetalleRutaDTO(ida=ida, regreso=regreso)
 
 

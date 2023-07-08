@@ -22,14 +22,16 @@ class RecorridoDTO(BaseModel):
     s_region: int
 
 
-class CalleDTO(BaseModel):
-    nombre: str
+class TrazadoDTO(BaseModel):
+    calle: str
+    comuna: str
+    region: str
     orden: int
 
 
 class DetalleRutaDTO(BaseModel):
-    ida: List[CalleDTO]
-    regreso: List[CalleDTO]
+    ida: List[TrazadoDTO]
+    regreso: List[TrazadoDTO]
 
 
 class VehicleDTO(BaseModel):

@@ -45,7 +45,7 @@ def get_detalle_ruta(
     return detalle_ruta
 
 
-@router.get("/vehicles", response_model=List[schemas.VehicleResponse])
+@router.get("/vehicles", response_model=schemas.VehicleResponse)
 def get_vehicles(
     db: Session = Depends(get_db), params: schemas.VehicleQueryParams = Depends()
 ):

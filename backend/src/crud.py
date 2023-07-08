@@ -108,7 +108,8 @@ def get_vehicles(db: Session, region: int, comuna: str, calle: str) -> List[Dict
     AND S.folio = V.s_folio;
     """
     params = {"region": region, "comuna": comuna, "calle": calle}
-    return execute_query(db, raw_query, params)
+    results = execute_query(db, raw_query, params)
+    return {"vehicles": results}
 
 
 def get_localization(db: Session, region: int, comuna: str) -> Dict:
@@ -118,4 +119,4 @@ def get_localization(db: Session, region: int, comuna: str) -> Dict:
     """
     params = {"region": region, "comuna": comuna}
     results = execute_query(db, raw_query, params)
-    return {'localization': results[0]}
+    return {"localization": results[0]}

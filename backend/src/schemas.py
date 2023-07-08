@@ -26,11 +26,19 @@ class Trazado(BaseModel):
     orden: int
 
 
+class Vehicle(BaseModel):
+    nombre_responsable: str
+    patente: str
+    marca: str
+    modelo: str
+    año_fabricacion: int
+
+
 class Localization(BaseModel):
     latitud: Any
     longitud: Any
 
-    @validator('latitud', 'longitud')
+    @validator("latitud", "longitud")
     def validate_value(cls, value):
         if isinstance(value, Decimal):
             return float(value)
@@ -74,11 +82,7 @@ class VehicleQueryParams(BaseModel):
 
 
 class VehicleResponse(BaseModel):
-    nombre_responsable: str
-    patente: str
-    marca: str
-    modelo: str
-    año_fabricacion: int
+    vehicles: List[Vehicle]
 
 
 class LocalizationQueryParams(BaseModel):

@@ -1,5 +1,10 @@
 /* IDS:
 
+# LAYOUT
+TITLE = "title"
+
+CHILE_MAP = "chile-map"
+
 # BUSCADOR RECORRIDOS
 FROM_REGION_DROPDOWN = "from-region-dropdown"
 FROM_COMUNA_DROPDOWN = "from-comuna-dropdown"
@@ -16,5 +21,114 @@ RECORRIDO_DATA_STORE = "recorrido_data"
 
 # DETALLE RECORRIDO (RUTA)
 DETALLE_RUTA_TITLE = "detalle-ruta-title"
-DETALLE_RUTA_IDA = "detalle-ruta-ida"
-DETALLE_RUTA_REGRESO = "detalle-ruta-regreso" */
+TABLA_RUTA_IDA = "detalle-ruta-ida"
+TABLA_RUTA_REGRESO = "detalle-ruta-regreso"
+TRAZADOS_DATA_STORE = "trazados-data"
+TRAZADO_ITEM = "trazado-item"
+TRAZADO_ITEM_DATA = "trazado-item-data"
+
+# TABLE VEHIULOS
+VEHICLES_INFO_CONTAINER = "table-vehicles-container"
+TABLE_VEHICLES = "table-vehicles"
+VEHICLES_INFO_TITLE = "vehicles-info-title"
+
+*/
+
+#title {
+    text-align: center;
+    font-size: 2em;
+    font-weight: bold;
+    margin-bottom: 0.5em;
+    margin-top: 0.5em;
+}
+
+#chile-map {
+    width: 100%;
+    height: 100%;
+}
+
+#search-recorridos-button {
+    margin-top: 1em;
+}
+
+#tabla-recorridos-container {
+    margin-top: 1em;
+}
+
+#tabla-recorridos-title {
+    text-align: center;
+    font-size: 1.5em;
+    font-weight: bold;
+    margin-bottom: 0.5em;
+}
+
+#tabla-recorridos {
+    width: 100%;
+    margin-bottom: 1em;
+}
+
+#tabla-recorridos th {
+    text-align: center;
+}
+
+#tabla-recorridos td {
+    text-align: center;
+}
+
+#tabla-recorridos tr:hover {
+    background-color: #f5f5f5;
+}
+
+#tabla-recorridos tr:nth-child(even) {
+    background-color: #f2f2f2;
+}
+
+#tabla-recorridos tr:nth-child(odd) {
+    background-color: #ffffff;
+}
+
+#search-recorridos-button {
+    margin-top: 1em;
+    margin-bottom: 1em;
+}
+
+#detalle-ruta-title {
+    text-align: center;
+    font-size: 1.5em;
+    font-weight: bold;
+    margin-bottom: 0.5em;
+}
+
+#detalle-ruta-ida {
+    justify-content: center;
+}
+
+.detail-route-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#detalle-ruta-regreso {
+    justify-content: center;
+}
+
+#vehicles-info-title {
+    text-align: center;
+    font-size: 1.5em;
+    font-weight: bold;
+    margin-bottom: 0.25em;
+}
+
+#table-vehicles {
+    width: 100%;
+    margin-bottom: 1em;
+}
+
+#table-vehicles th {
+    text-align: center;
+}
+
+#table-vehicles td {
+    text-align: center;
+}

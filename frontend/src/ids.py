@@ -1,3 +1,6 @@
+# LAYOUT
+TITLE = "title"
+
 CHILE_MAP = "chile-map"
 
 # BUSCADOR RECORRIDOS
@@ -16,5 +19,13 @@ RECORRIDO_DATA_STORE = "recorrido_data"
 
 # DETALLE RECORRIDO (RUTA)
 DETALLE_RUTA_TITLE = "detalle-ruta-title"
-DETALLE_RUTA_IDA = "detalle-ruta-ida"
-DETALLE_RUTA_REGRESO = "detalle-ruta-regreso"
+TABLA_RUTA_IDA = "detalle-ruta-ida"
+TABLA_RUTA_REGRESO = "detalle-ruta-regreso"
+TRAZADOS_DATA_STORE = "trazados-data"
+TRAZADO_ITEM = "trazado-item"
+TRAZADO_ITEM_DATA = "trazado-item-data"
+
+# TABLE VEHIULOS
+VEHICLES_INFO_CONTAINER = "table-vehicles-container"
+TABLE_VEHICLES = "table-vehicles"
+VEHICLES_INFO_TITLE = "vehicles-info-title"
