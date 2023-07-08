@@ -63,9 +63,9 @@ def build_table(vehicles: List[VehicleDTO]) -> dash_table.DataTable:
             {"name": COLUMN_NAMES[column], "id": column} for column in data.columns
         ],
         data=data.to_dict("records"),
-        style_cell_conditional=[
-            {"if": {"column_id": "recorrido_data"}, "width": "0px", "display": "none"}
-        ],
+        # style_cell_conditional=[
+        #     {"if": {"column_id": "recorrido_data"}, "width": "0px", "display": "none"}
+        # ],
         style_header={"backgroundColor": "white", "fontWeight": "bold"},
         style_data={"whiteSpace": "normal", "height": "auto", "lineHeight": "15px"},
         style_table={"maxHeight": "500px", "overflowY": "scroll"},
@@ -96,6 +96,11 @@ def register_callbacks(app: dash.Dash):
             comuna=trazado["comuna"],
             calle=trazado["calle"],
         )
+        if not vehicles:
+            return build_table([]), html.Div(
+                html.H3(f"No hay vehículos en {fix_name(trazado['calle'])}"),
+                id=ids.VEHICLES_INFO_TITLE,
+            )
 
         title = html.Div(
             html.H3(f"Vehículos en {fix_name(trazado['calle'])}"),
