@@ -88,16 +88,6 @@ CREATE INDEX lugar_index ON pudin.lugar (region, nombre, comuna);
 
 CREATE INDEX vehiculo_index ON pudin.vehiculo (s_region, s_folio);
 
-CREATE USER pudinpoof WITH PASSWORD 'pudin';
-
-GRANT USAGE ON SCHEMA pudin TO pudinpoof;
-
-GRANT
-SELECT
-    ON ALL TABLES IN SCHEMA pudin TO pudinpoof;
-
-GRANT CONNECT ON DATABASE cc3201 TO pudinpoof;
-
 COPY pudin.servicio
 FROM
     '/data/servicio.csv' DELIMITER ',' CSV HEADER;
@@ -271,3 +261,14 @@ FROM
     pudin.lugar
 WHERE
     region = 16;
+
+
+CREATE USER pudinpoof WITH PASSWORD 'pudin';
+
+GRANT USAGE ON SCHEMA pudin TO pudinpoof;
+
+GRANT
+SELECT
+    ON ALL TABLES IN SCHEMA pudin TO pudinpoof;
+
+GRANT CONNECT ON DATABASE cc3201 TO pudinpoof;
