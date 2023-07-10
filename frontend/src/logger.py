@@ -11,12 +11,12 @@ logger = AppLogger(
     debug_logs=True,
 )
 logger.allow_tags = [
-    "GENERAL",
+    # "GENERAL",
     # "CHILE-MAP",
     # "BUSCADOR-RECORRIDOS",
     # "TABLA-RECORRIDOS",
     # "DETALLE-RUTA",
-    "VEHICLES-INFO",
+    # "VEHICLES-INFO",
 ]
 logger.set_level("DEBUG")
 logger.log(f"Logger initialized using tags {logger.allow_tags}")

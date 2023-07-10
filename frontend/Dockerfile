@@ -14,5 +14,5 @@ WORKDIR /frontend
 
 EXPOSE 8090
 
-CMD ["gunicorn", "app:server", "-w", "3", "--bind", "0.0.0.0:8050", "--timeout", "300"]
+CMD ["gunicorn", "app:server", "-w", "3", "--bind", "0.0.0.0:8090", "--timeout", "300"]
 # CMD ["python", "app.py"]
