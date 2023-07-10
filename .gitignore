@@ -16,6 +16,9 @@ database/data
 .env
 database/.env
 backend/.env
+backend/.env.server_sudo
+backend/.env.docker_pudin
+backend/.env.server_pudin
 
 # poetry
 poetry.lock
