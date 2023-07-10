@@ -9,7 +9,11 @@ Proyecto para el curso CC3201
 - [Pablo Skewes](https://github.com/pabloskewes/)
 
 ## Descripción
-El proyecto consiste en una aplicación web que permite buscar recorridos de parques vehiculares en Chile. La aplicación permite ingresar un origen y un destino, y muestra los recorridos que cumplen con estos criterios. Además, se puede ver el recorrido en un mapa y se puede ver información de los vehículos que realizan el recorrido.
+El siguiente proyecto tiene un enfoque pedagógico, y se presenta como el proyecto final para el curso Bases de Datos (CC3201) de la Universidad de Chile. Para este trabajo se utilizaron los siguientes datos:  [Parques Vehiculares](https://usuarios.subtrans.gob.cl/estadisticas/parques-vehiculares.html)
+
+El proyecto consiste en una aplicación web que permite buscar recorridos de parques vehiculares en Chile. La aplicación permite ingresar un origen y un destino, y muestra los recorridos que cumplen con estos criterios. Luego, se puede clickear sobre la tabla de recorridos para obtener el detalle de la ruta, es decir, los distintos trazados que componen el recorrido, y finalemente también se pueden clickear los recorridos para obtener información sobre los vehículos que pasan por ese trazado. Como bonus, si nos queda tiempo implementaremos un mapa para ver los recorridos.
+
+El proyecto ya se encuentra en producción en el [servidor](http://grupo10.cc3201.dcc.uchile.cl/), sin embargo es posible que este sea cerrado tras el término del curso, por lo que en tal caso sólo se podría probar la aplicación usando Docker.
 
 ## Instalación
 
@@ -40,6 +44,7 @@ Para ejecutar el proyecto, se debe ejecutar el frontend y el backend por separad
 make run_backend
 make run_frontend
 ```
+Estos comandos deberían funcionar para Linux, en caso de tener Windows se tendrá que crear un ambiente virtual de otra forma (opcional) y para poder correr el programa, habrá que entrar a la carpeta `backend` y ejecutar el archivo `main.py`, y en otra terminal entrar a la carpeta `frontend` y ejecutar el archivo `app.py`.
 
 Tras esto, se puede acceder al frontend en el puerto 8090 y al backend en el puerto 8091.
 
