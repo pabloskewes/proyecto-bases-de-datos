@@ -45,6 +45,25 @@ Tras esto, se puede acceder al frontend en el puerto 8090 y al backend en el pue
 
 ## Documentación
 
+### Estructura del proyecto
+El proyecto está dividido en tres partes: frontend, backend y base de datos. Cada una de estas partes está en una carpeta distinta. Además, se incluye una carpeta `project_logger` que contiene un paquete creado para el proyecto que permite crear logs en el frontend y el backend. A demás, también se incluyó nginx para servir los archivos estáticos del frontend. La aplicación está dockerizada y se puede ejecutar con docker-compose, en este caso se crea la base de datos de forma local en lugar de usar la base de datos que se encuentra en el servidor.
+La estructura del proyecto es la siguiente:
+
+```
+proyecto-bases-de-datos
+├── backend # Backend de la aplicación
+├── database # Base de datos de la aplicación
+├── frontend # Frontend de la aplicación
+├── nginx # Nginx para servir los archivos estáticos del frontend
+├── project_logger # Paquete para crear logs en el frontend y el backend
+├── docker-compose.yml # Docker-compose para ejecutar la aplicación
+├── Makefile # Makefile para ejecutar la aplicación
+├── README.md # README del proyecto
+```
+
+A continuación se presenta un esquema de la interacción entre el frontend y el backend:
+
+![Esquema de la interacción entre el frontend y el backend](./docs/frontend.png)
 
 ### Frontend
 El frontend está desarrollado en Dash, una librería de Python para crear aplicaciones web.
