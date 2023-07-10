@@ -6,7 +6,7 @@ class ServicioDTO(BaseModel):
     folio: int
     region: int
     tipo_servicio: str
-    flota: str
+    flota: int
     nombre_responsable: str
 
 
@@ -23,9 +23,9 @@ class RecorridoDTO(BaseModel):
 
 
 class TrazadoDTO(BaseModel):
+    region: int
     calle: str
     comuna: str
-    region: str
     orden: int
 
 

@@ -10,7 +10,7 @@ from src.dto import (
     VehicleDTO,
 )
 
-HOST = "http://localhost"
+HOST = "backend"
 PORT = 8091
 
 
@@ -99,7 +99,7 @@ class Client:
         return map_vehicles(response)
 
 
-client = Client(base_url=f"{HOST}:{PORT}")
+client = Client(base_url=f"http://{HOST}:{PORT}")
 
 
 def get_client() -> Client:
