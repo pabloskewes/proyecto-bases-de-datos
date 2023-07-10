@@ -11,8 +11,8 @@ logger = AppLogger(
     debug_logs=True,
 )
 logger.allow_tags = [
-    "MAIN",
-    "CRUD",
+    # "MAIN",
+    # "CRUD",
 ]
 logger.set_level("DEBUG")
 
