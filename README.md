@@ -4,9 +4,9 @@ Proyecto para el curso CC3201
 
 ## Integrantes
  
-- Nicolás Acevedo
-- Catalina Parra
-- Pablo Skewes
+- [Nicolás Acevedo](https://github.com/nicoacevedor)
+- [Catalina Parra](https://github.com/caatabs)
+- [Pablo Skewes](https://github.com/pabloskewes/)
 
 ## Descripción
 El proyecto consiste en una aplicación web que permite buscar recorridos de parques vehiculares en Chile. La aplicación permite ingresar un origen y un destino, y muestra los recorridos que cumplen con estos criterios. Además, se puede ver el recorrido en un mapa y se puede ver información de los vehículos que realizan el recorrido.
